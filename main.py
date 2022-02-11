@@ -1,6 +1,8 @@
 import sys, time
 import pygame
 
+import keyboard
+
 # Screen size
 WINDOW_WIDTH = 640
 WINDOW_HEIGHT = 360
@@ -20,6 +22,9 @@ main_clock = pygame.time.Clock()
 # Sprites
 BACKGROUND = pygame.image.load("content/PurdleBackground.png").convert()
 KEYBOARD = pygame.image.load("content/PurdleKeyboard.png").convert_alpha()
+
+# Objects
+words = []
 
 def render():
     GRAPHICS.fill(CLEAR_COLOR)
@@ -44,6 +49,10 @@ def render():
 def main():
     pygame.init()
     pygame.display.set_caption("Purdle")
+
+    word_file = open("content/PurdleWords.txt", "r")
+    words = word_file.readlines()
+    word_file.close()
 
     prev_time = time.time()
     delta_time = 0
