@@ -4,22 +4,27 @@ import pygame
 # Screen size
 WINDOW_WIDTH = 640
 WINDOW_HEIGHT = 360
-VIEW_WIDTH = 640
-VIEW_HEIGHT = 360
+VIEW_WIDTH = 320
+VIEW_HEIGHT = 180
 
 GRAPHICS = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.RESIZABLE)
 TARGET = pygame.Surface((VIEW_WIDTH, VIEW_HEIGHT))
 
 # Color
-CLEAR_COLOR = ((0,0,0))
+CLEAR_COLOR = ((41,40,49))
 
 # Time
 FRAMERATE = 60
 main_clock = pygame.time.Clock()
 
+# Sprites
+BACKGROUND = pygame.image.load("content/PurdleBackground.png").convert()
+KEYBOARD = pygame.image.load("content/PurdleKeyboard.png").convert_alpha()
+
 def render():
     GRAPHICS.fill(CLEAR_COLOR)
-    TARGET.fill((255,0,0))
+    TARGET.blit(BACKGROUND, (0, 0))
+    TARGET.blit(KEYBOARD, (32, 136))
 
     #region Render target resizing
 
