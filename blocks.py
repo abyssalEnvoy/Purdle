@@ -152,18 +152,20 @@ class Blocks:
                 pos = self.key_row_one
 
             # Sorting colours
-            sprite = blocks.subsurface(self.CIRCLE_BLUE)
+            colour = self.CIRCLE_BLUE
             for word in range(len(self.keyboard.player_one)):
                 for char in range(len(self.keyboard.player_one[word])):
 
                     if self.keyboard.player_one[word][char] == self.letters[num]:
                         if self.player_one[char + word * 5] == self.SQUARE_YELLOW: 
-                            sprite = blocks.subsurface(self.CIRCLE_YELLOW)
+                            if colour != self.CIRCLE_GREEN:
+                                colour = self.CIRCLE_YELLOW
                         elif self.player_one[char + word * 5] == self.SQUARE_GREEN:
-                            sprite = blocks.subsurface(self.CIRCLE_GREEN)
+                            colour = self.CIRCLE_GREEN
 
+            sprite = blocks.subsurface(colour)
             target.blit(sprite, (pos[0] + offset_x * 12, pos[1]))
-
+        
         #endregion
 
         #region Player two's keyboard letter colours
@@ -187,16 +189,18 @@ class Blocks:
                 pos = self.key_row_one
 
             # Sorting colours
-            sprite = blocks.subsurface(self.CIRCLE_BLUE)
+            colour = self.CIRCLE_BLUE
             for word in range(len(self.keyboard.player_two)):
                 for char in range(len(self.keyboard.player_two[word])):
 
                     if self.keyboard.player_two[word][char] == self.letters[num]:
                         if self.player_two[char + word * 5] == self.SQUARE_YELLOW: 
-                            sprite = blocks.subsurface(self.CIRCLE_YELLOW)
+                            if colour != self.CIRCLE_GREEN:
+                                colour = self.CIRCLE_YELLOW
                         elif self.player_two[char + word * 5] == self.SQUARE_GREEN:
-                            sprite = blocks.subsurface(self.CIRCLE_GREEN)
+                            colour = self.CIRCLE_GREEN
 
+            sprite = blocks.subsurface(colour)
             target.blit(sprite, (pos[0] + offset_x * 12 + 137, pos[1]))
 
-            #endregion
+        #endregion

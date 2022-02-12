@@ -29,8 +29,7 @@ class Keyboard:
         for i in range(len(self.words_list)):
             self.words_list[i] = self.words_list[i].strip()
 
-        #self.word = self.words_list[random.randint(0, len(self.words_list) - 1)]
-        self.word = "three"
+        self.word = self.words_list[random.randint(0, len(self.words_list) - 1)]
     
     def update(self):
         if self.turn == 0:
