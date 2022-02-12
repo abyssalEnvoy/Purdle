@@ -2,7 +2,7 @@ import pygame
 
 class Font:
     
-    spacing = 1
+    spacing = 6
     char_width = 8
     char_order = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     characters = {}

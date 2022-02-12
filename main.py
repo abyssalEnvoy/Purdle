@@ -34,7 +34,8 @@ def render():
     TARGET.blit(BACKGROUND, (0, 0))
     TARGET.blit(KEYBOARD, (32, 136))
 
-    font.render(TARGET, "HAHAH", (0, 0))
+    keyboard.render(TARGET, font)
+
     #region Render target resizing
 
     window_width, window_height = GRAPHICS.get_size()
@@ -56,8 +57,6 @@ def main():
 
     prev_time = time.time()
     delta_time = 0
-
-    user_text = ""
 
     while True:
         main_clock.tick(FRAMERATE)
