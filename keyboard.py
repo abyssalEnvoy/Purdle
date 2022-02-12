@@ -1,4 +1,5 @@
 import random
+from tkinter import W
 import pygame
 
 from errors import Errors
@@ -7,6 +8,14 @@ class Keyboard:
 
     player_one = []
     player_two = []
+
+    won_one = False
+    won_two = False
+
+    win_one_num = 7
+    win_one_num = 7
+
+    game_over = False
 
     pos_one = (62, 50)
     pos_two = (195, 50)
@@ -38,37 +47,62 @@ class Keyboard:
     def update(self):
         self.errors.update()
 
+        keys_down = pygame.key.get_pressed()
+
+        if keys_down[pygame.K_RETURN] and not self.previous_key[pygame.K_RETURN]:
+            if not(self.game_over):
+                word_in_list = False
+                for n in self.words_list:
+                    if self.user_text == n.upper():
+                        if self.turn == 0:
+                            self.player_one.append(self.user_text)
+                            if self.won_two:
+                                self.spacing += 14
+                        else:
+                            self.player_two.append(self.user_text)
+                            self.spacing += 14
+
+                        if not(self.won_two or self.won_one):
+                            self.turn += 1
+                        else:
+                            self.turn += 2
+                        
+                        if self.turn % 2 == 0:
+                            self.turn = 0
+                        else:
+                            self.turn = 1
+
+                        self.user_text = ""
+                        word_in_list = True
+                        break
+
+                if not(word_in_list):
+                    if len(self.user_text) < 5:
+                        self.errors.length = "0" + self.errors.length
+                    else:
+                        self.errors.length = "1" + self.errors.length
+                    self.errors.alpha.insert(0, 1)
+                    self.errors.wait_time.insert(0, 0.8)
+            else:
+                pass
+
+            for n in range(len(self.player_one)):
+                if self.player_one[n] == self.word_one.upper():
+                    self.won_one = True
+                    self.win_one_num = n
+                    
+            for n in range(len(self.player_two)):
+                if self.player_two[n] == self.word_two.upper():
+                    self.won_two = True
+                    self.win_two_num = n
+
+            if len(self.player_two) >= 6 or (self.won_two and self.won_one):
+                self.game_over = True
+
         if self.turn == 0:
             self.pos_render =  (self.pos_one[0], self.pos_one[1] + self.spacing)
         else:
             self.pos_render =  (self.pos_two[0], self.pos_two[1] + self.spacing)
-
-        keys_down = pygame.key.get_pressed()
-
-        if keys_down[pygame.K_RETURN] and not self.previous_key[pygame.K_RETURN]:
-            word_in_list = False
-            for n in self.words_list:
-                if self.user_text == n.upper():
-                    if self.turn == 0:
-                        self.player_one.append(self.user_text)
-                    else:
-                        self.player_two.append(self.user_text)
-                        self.spacing += 14
-
-                    self.turn += 1
-                    if self.turn > 1:
-                        self.turn = 0
-                    self.user_text = ""
-                    word_in_list = True
-                    break
-
-            if not(word_in_list):
-                if len(self.user_text) < 5:
-                    self.errors.length = "0" + self.errors.length
-                else:
-                    self.errors.length = "1" + self.errors.length
-                self.errors.alpha.insert(0, 1)
-                self.errors.wait_time.insert(0, 0.8)
 
         self.previous_key = keys_down
             
@@ -85,12 +119,12 @@ class Keyboard:
         font.render(target, self.word_two.upper(), (257, 0))
         self.errors.render(target, errors)
 
-
     def get_input(self, event):
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_BACKSPACE:
-                self.user_text = self.user_text[:-1]
-            elif len(self.user_text) < 5:
-                for i in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
-                    if str(event.unicode).upper() == i:
-                        self.user_text += i
+        if len(self.player_two) <= 5 and not(self.game_over):
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_BACKSPACE:
+                    self.user_text = self.user_text[:-1]
+                elif len(self.user_text) < 5:
+                    for i in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+                        if str(event.unicode).upper() == i:
+                            self.user_text += i

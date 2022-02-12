@@ -27,6 +27,7 @@ BLOCK = pygame.image.load("content/PurdleBlocks.png").convert_alpha()
 FONT = pygame.image.load("content/PurdleFont.png").convert_alpha()
 KEYBOARD = pygame.image.load("content/PurdleKeyboard.png").convert_alpha()
 ERRORS = pygame.image.load("content/PurdleErrors.png").convert_alpha()
+END = pygame.image.load("content/PurdleEnd.png").convert_alpha()
 
 # Objects
 keyboard = Keyboard()
@@ -41,6 +42,25 @@ def render():
     TARGET.blit(KEYBOARD, (32, 136))
     
     keyboard.render(TARGET, font, ERRORS)
+
+    if keyboard.game_over:
+        TARGET.blit(END, (132, 40))
+        if keyboard.won_one and keyboard.won_two:
+            if keyboard.win_one_num <= keyboard.win_two_num:
+                font.render(TARGET, "ONE", (137, 53))
+                font.render(TARGET, "TWO", (149, 102))
+            else:
+                font.render(TARGET, "TWO", (137, 53))
+                font.render(TARGET, "ONE", (149, 102))  
+        elif keyboard.won_one:
+            font.render(TARGET, "ONE", (137, 53))
+            font.render(TARGET, "TWO", (149, 102))
+        elif keyboard.won_two:
+            font.render(TARGET, "TWO", (137, 53))
+            font.render(TARGET, "ONE", (149, 102))  
+        else:
+            font.render(TARGET, "NIL", (137, 53))
+            font.render(TARGET, "NIL", (149, 102))
 
     #region Render target resizing
 
