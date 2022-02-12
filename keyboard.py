@@ -1,3 +1,4 @@
+import random
 import pygame
 
 class Keyboard:
@@ -10,7 +11,8 @@ class Keyboard:
 
     pos_render = (0, 0)
 
-    words = []
+    words_list = []
+    word = ""
     turn = 0
 
     spacing = 0
@@ -21,8 +23,13 @@ class Keyboard:
 
     def __init__(self):
         word_file = open("content/PurdleWords.txt", "r")
-        words = word_file.readlines()
+        self.words_list = word_file.readlines()
         word_file.close()
+
+        for i in range(len(self.words_list)):
+            self.words_list[i] = self.words_list[i].strip()
+
+        self.word = self.words_list[random.randint(0, 2498)]
     
     def update(self):
         if self.turn == 0:
@@ -33,16 +40,24 @@ class Keyboard:
         keys_down = pygame.key.get_pressed()
 
         if keys_down[pygame.K_RETURN] and not self.previous_key[pygame.K_RETURN]:
-            if self.turn == 0:
-                self.player_one.append(self.user_text)
-            else:
-                self.player_two.append(self.user_text)
-                self.spacing += 14
+            word_in_list = False
+            for n in self.words_list:
+                if self.user_text == n.upper():
+                    if self.turn == 0:
+                        self.player_one.append(self.user_text)
+                    else:
+                        self.player_two.append(self.user_text)
+                        self.spacing += 14
 
-            self.turn += 1
-            if self.turn > 1:
-                self.turn = 0
-            self.user_text = ""
+                    self.turn += 1
+                    if self.turn > 1:
+                        self.turn = 0
+                    self.user_text = ""
+                    word_in_list = True
+                    break
+
+            if not(word_in_list):
+                pass
 
         self.previous_key = keys_down
             

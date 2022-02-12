@@ -9,7 +9,7 @@ class Font:
 
     def __init__(self, font):
         char_count = 0 
-        for x in range(font.get_width()):
+        for x in range(font.get_width() + 8):
             if x != 0 and x % self.char_width == 0:
                 char = self.clip(font, x - self.char_width, 0, self.char_width, font.get_height()) 
                 self.characters[self.char_order[char_count]] = char

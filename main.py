@@ -3,6 +3,7 @@ import pygame
 
 from keyboard import Keyboard
 from font import Font
+from blocks import Blocks
 
 # Screen size
 WINDOW_WIDTH = 640
@@ -22,18 +23,22 @@ main_clock = pygame.time.Clock()
 
 # Sprites
 BACKGROUND = pygame.image.load("content/PurdleBackground.png").convert()
+BLOCK = pygame.image.load("content/PurdleBlocks.png").convert_alpha()
 FONT = pygame.image.load("content/PurdleFont.png").convert_alpha()
 KEYBOARD = pygame.image.load("content/PurdleKeyboard.png").convert_alpha()
 
 # Objects
 keyboard = Keyboard()
 font = Font(FONT)
+blocks = Blocks(keyboard)
 
 def render():
     GRAPHICS.fill(CLEAR_COLOR)
     TARGET.blit(BACKGROUND, (0, 0))
-    TARGET.blit(KEYBOARD, (32, 136))
 
+    blocks.render(TARGET, BLOCK)
+    TARGET.blit(KEYBOARD, (32, 136))
+    
     keyboard.render(TARGET, font)
 
     #region Render target resizing
@@ -73,6 +78,7 @@ def main():
         prev_time = current_time
         
         keyboard.update()
+        blocks.update()
 
         render()
 
