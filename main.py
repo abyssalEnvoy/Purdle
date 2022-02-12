@@ -1,4 +1,4 @@
-import sys, time
+import sys, time, random
 import pygame
 
 from keyboard import Keyboard
@@ -29,12 +29,7 @@ KEYBOARD = pygame.image.load("content/PurdleKeyboard.png").convert_alpha()
 ERRORS = pygame.image.load("content/PurdleErrors.png").convert_alpha()
 END = pygame.image.load("content/PurdleEnd.png").convert_alpha()
 
-# Objects
-keyboard = Keyboard()
-font = Font(FONT)
-blocks = Blocks(keyboard)
-
-def render():
+def render(keyboard, blocks, font):
     GRAPHICS.fill(CLEAR_COLOR)
     TARGET.blit(BACKGROUND, (0, 0))
 
@@ -61,6 +56,9 @@ def render():
         else:
             font.render(TARGET, "NIL", (137, 53))
             font.render(TARGET, "NIL", (149, 102))
+        
+        font.render(TARGET, keyboard.word_one.upper(), (keyboard.pos_one[0], keyboard.pos_one[1] - 14))
+        font.render(TARGET, keyboard.word_two.upper(), (keyboard.pos_two[0], keyboard.pos_two[1] - 14))
 
     #region Render target resizing
 
@@ -78,6 +76,13 @@ def render():
     #endregion
 
 def main():
+    # Objects
+    keyboard = Keyboard()
+    keyboard.player_one = []
+    keyboard.player_two = []
+    font = Font(FONT)
+    blocks = Blocks(keyboard)
+
     pygame.init()
     pygame.display.set_caption("Purdle")
 
@@ -101,7 +106,11 @@ def main():
         keyboard.update()
         blocks.update()
 
-        render()
+        render(keyboard, blocks, font)
+
+        # Restart game
+        if keyboard.restart:
+            main()
 
 if __name__ == "__main__":
     main()

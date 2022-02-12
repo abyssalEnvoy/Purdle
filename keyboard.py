@@ -16,6 +16,7 @@ class Keyboard:
     win_one_num = 7
 
     game_over = False
+    restart = False
 
     pos_one = (62, 50)
     pos_two = (195, 50)
@@ -43,6 +44,8 @@ class Keyboard:
 
         self.word_one = self.words_list[random.randint(0, len(self.words_list) - 1)]
         self.word_two = self.words_list[random.randint(0, len(self.words_list) - 1)]
+
+        self.previous_key = pygame.key.get_pressed()
     
     def update(self):
         self.errors.update()
@@ -84,13 +87,13 @@ class Keyboard:
                     self.errors.alpha.insert(0, 1)
                     self.errors.wait_time.insert(0, 0.8)
             else:
-                pass
+                self.restart = True
 
             for n in range(len(self.player_one)):
                 if self.player_one[n] == self.word_one.upper():
                     self.won_one = True
                     self.win_one_num = n
-                    
+
             for n in range(len(self.player_two)):
                 if self.player_two[n] == self.word_two.upper():
                     self.won_two = True
@@ -115,8 +118,8 @@ class Keyboard:
             font.render(target, self.player_two[i], (self.pos_two[0], self.pos_two[1] + i * 14))
         
         font.render(target, self.user_text, self.pos_render)
-        font.render(target, self.word_one.upper(), (0, 0))
-        font.render(target, self.word_two.upper(), (257, 0))
+        #font.render(target, self.word_one.upper(), (0, 0))
+        #font.render(target, self.word_two.upper(), (257, 0))
         self.errors.render(target, errors)
 
     def get_input(self, event):
