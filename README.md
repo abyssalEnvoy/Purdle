@@ -1,6 +1,6 @@
 # Purdle
 
-A Wordle clone I made for school using Python for learning purposes.
+A Wordle clone I made in a little over 24 hours for school using Python for learning purposes.
 
 ## Building from source
 
