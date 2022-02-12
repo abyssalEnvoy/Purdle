@@ -26,6 +26,7 @@ BACKGROUND = pygame.image.load("content/PurdleBackground.png").convert()
 BLOCK = pygame.image.load("content/PurdleBlocks.png").convert_alpha()
 FONT = pygame.image.load("content/PurdleFont.png").convert_alpha()
 KEYBOARD = pygame.image.load("content/PurdleKeyboard.png").convert_alpha()
+ERRORS = pygame.image.load("content/PurdleErrors.png").convert_alpha()
 
 # Objects
 keyboard = Keyboard()
@@ -39,7 +40,7 @@ def render():
     blocks.render(TARGET, BLOCK)
     TARGET.blit(KEYBOARD, (32, 136))
     
-    keyboard.render(TARGET, font)
+    keyboard.render(TARGET, font, ERRORS)
 
     #region Render target resizing
 

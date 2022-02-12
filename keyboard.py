@@ -1,6 +1,8 @@
 import random
 import pygame
 
+from errors import Errors
+
 class Keyboard:
 
     player_one = []
@@ -16,10 +18,10 @@ class Keyboard:
     turn = 0
 
     spacing = 0
-
     user_text = ""
-
     previous_key = []
+
+    errors = Errors()
 
     def __init__(self):
         word_file = open("content/PurdleWords.txt", "r")
@@ -32,6 +34,8 @@ class Keyboard:
         self.word = self.words_list[random.randint(0, len(self.words_list) - 1)]
     
     def update(self):
+        self.errors.update()
+
         if self.turn == 0:
             self.pos_render =  (self.pos_one[0], self.pos_one[1] + self.spacing)
         else:
@@ -57,12 +61,16 @@ class Keyboard:
                     break
 
             if not(word_in_list):
-                pass
+                if len(self.user_text) < 5:
+                    self.errors.length += "0"
+                else:
+                    self.errors.length += "1"
+                self.errors.alpha.append(1)
 
         self.previous_key = keys_down
             
 
-    def render(self, target, font):
+    def render(self, target, font, errors):
         for i in range(len(self.player_one)):
             font.render(target, self.player_one[i], (self.pos_one[0], self.pos_one[1] + i * 14))
         
@@ -71,6 +79,7 @@ class Keyboard:
         
         font.render(target, self.user_text, self.pos_render)
         font.render(target, self.word.upper(), (0, 0))
+        self.errors.render(target, errors)
 
 
     def get_input(self, event):
