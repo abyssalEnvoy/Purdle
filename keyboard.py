@@ -29,7 +29,8 @@ class Keyboard:
         for i in range(len(self.words_list)):
             self.words_list[i] = self.words_list[i].strip()
 
-        self.word = self.words_list[random.randint(0, len(self.words_list) - 1)]
+        #self.word = self.words_list[random.randint(0, len(self.words_list) - 1)]
+        self.word = "three"
     
     def update(self):
         if self.turn == 0:
@@ -70,6 +71,7 @@ class Keyboard:
             font.render(target, self.player_two[i], (self.pos_two[0], self.pos_two[1] + i * 14))
         
         font.render(target, self.user_text, self.pos_render)
+        font.render(target, self.word.upper(), (0, 0))
 
 
     def get_input(self, event):
