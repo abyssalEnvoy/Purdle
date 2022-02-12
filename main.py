@@ -28,6 +28,7 @@ FONT = pygame.image.load("content/PurdleFont.png").convert_alpha()
 KEYBOARD = pygame.image.load("content/PurdleKeyboard.png").convert_alpha()
 ERRORS = pygame.image.load("content/PurdleErrors.png").convert_alpha()
 END = pygame.image.load("content/PurdleEnd.png").convert_alpha()
+ICON = pygame.image.load("content/PurdleIcon.png").convert()
 
 def render(keyboard, blocks, font):
     GRAPHICS.fill(CLEAR_COLOR)
@@ -84,6 +85,7 @@ def main():
     blocks = Blocks(keyboard)
 
     pygame.init()
+    pygame.display.set_icon(ICON)
     pygame.display.set_caption("Purdle")
 
     prev_time = time.time()
@@ -91,7 +93,7 @@ def main():
 
     while True:
         main_clock.tick(FRAMERATE)
-        pygame.display.set_caption("Purdle FPS: {}".format(main_clock.get_fps()))
+        #pygame.display.set_caption("Purdle FPS: {}".format(main_clock.get_fps()))
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
