@@ -47,8 +47,8 @@ class Blocks:
                     self.letters_one.append(word[char])
 
                 placed = False
-                for letter in range(len(self.keyboard.word)):
-                    if word[char] == self.keyboard.word[letter].upper():
+                for letter in range(len(self.keyboard.word_one)):
+                    if word[char] == self.keyboard.word_one[letter].upper():
                         if char == letter:
                             # Green
                             if not(placed):
@@ -66,8 +66,8 @@ class Blocks:
         # Correcting misplaced yellow blocks
         for word in range(len(self.keyboard.player_one)):
             for char in range(len(self.keyboard.player_one[word])):
-                for letter in range(len(self.keyboard.word)):
-                    if self.keyboard.player_one[word][char] == self.keyboard.word[letter].upper():
+                for letter in range(len(self.keyboard.word_one)):
+                    if self.keyboard.player_one[word][char] == self.keyboard.word_one[letter].upper():
                         if char == letter:
                             self.player_one[word * 5 + char] = self.SQUARE_GREEN
 
@@ -85,8 +85,8 @@ class Blocks:
                     self.letters_two.append(word[char])
 
                 placed = False
-                for letter in range(len(self.keyboard.word)):
-                    if word[char] == self.keyboard.word[letter].upper():
+                for letter in range(len(self.keyboard.word_two)):
+                    if word[char] == self.keyboard.word_two[letter].upper():
                         if char == letter:
                             # Green
                             if not(placed):
@@ -104,8 +104,8 @@ class Blocks:
         # Correcting misplaced yellow blocks
         for word in range(len(self.keyboard.player_two)):
             for char in range(len(self.keyboard.player_two[word])):
-                for letter in range(len(self.keyboard.word)):
-                    if self.keyboard.player_two[word][char] == self.keyboard.word[letter].upper():
+                for letter in range(len(self.keyboard.word_two)):
+                    if self.keyboard.player_two[word][char] == self.keyboard.word_two[letter].upper():
                         if char == letter:
                             self.player_two[word * 5 + char] = self.SQUARE_GREEN
 

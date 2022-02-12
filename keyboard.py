@@ -14,7 +14,8 @@ class Keyboard:
     pos_render = (0, 0)
 
     words_list = []
-    word = ""
+    word_one = ""
+    word_two = ""
     turn = 0
 
     spacing = 0
@@ -31,7 +32,8 @@ class Keyboard:
         for i in range(len(self.words_list)):
             self.words_list[i] = self.words_list[i].strip()
 
-        self.word = self.words_list[random.randint(0, len(self.words_list) - 1)]
+        self.word_one = self.words_list[random.randint(0, len(self.words_list) - 1)]
+        self.word_two = self.words_list[random.randint(0, len(self.words_list) - 1)]
     
     def update(self):
         self.errors.update()
@@ -79,7 +81,8 @@ class Keyboard:
             font.render(target, self.player_two[i], (self.pos_two[0], self.pos_two[1] + i * 14))
         
         font.render(target, self.user_text, self.pos_render)
-        #font.render(target, self.word.upper(), (0, 0))
+        font.render(target, self.word_one.upper(), (0, 0))
+        font.render(target, self.word_two.upper(), (257, 0))
         self.errors.render(target, errors)
 
 
