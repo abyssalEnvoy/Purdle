@@ -6,6 +6,7 @@ class Errors:
     ENOUGH_LETTERS = pygame.Rect(0, 8, 54, 14)
     
     alpha = []
+    wait_time = []
     length = ""
     prev_time = time.time()
     delta_time = 0
@@ -14,9 +15,14 @@ class Errors:
         current_time = time.time()
         self.delta_time = current_time - self.prev_time
         self.prev_time = current_time
+        
+        for i in range(len(self.wait_time)):
+            self.wait_time[i] -= self.delta_time
 
         for i in range(len(self.alpha)):
-            self.alpha[i] -= 1 * self.delta_time
+            if self.wait_time[i] <= 0:
+                self.alpha[i] -= 2.5 * self.delta_time
+
 
     def render(self, target, error):
         num = len(self.length)
@@ -41,4 +47,5 @@ class Errors:
                     offset_y += 15
             
             sprite = error.subsurface(error_type)
+            sprite.set_alpha(int(255 * self.alpha[i]))
             target.blit(sprite, (133, 48 + offset_y))

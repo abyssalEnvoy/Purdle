@@ -62,10 +62,11 @@ class Keyboard:
 
             if not(word_in_list):
                 if len(self.user_text) < 5:
-                    self.errors.length += "0"
+                    self.errors.length = "0" + self.errors.length
                 else:
-                    self.errors.length += "1"
-                self.errors.alpha.append(1)
+                    self.errors.length = "1" + self.errors.length
+                self.errors.alpha.insert(0, 1)
+                self.errors.wait_time.insert(0, 0.8)
 
         self.previous_key = keys_down
             
@@ -78,7 +79,7 @@ class Keyboard:
             font.render(target, self.player_two[i], (self.pos_two[0], self.pos_two[1] + i * 14))
         
         font.render(target, self.user_text, self.pos_render)
-        font.render(target, self.word.upper(), (0, 0))
+        #font.render(target, self.word.upper(), (0, 0))
         self.errors.render(target, errors)
 
 
