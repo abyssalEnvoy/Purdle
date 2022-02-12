@@ -14,6 +14,15 @@ class Blocks:
     player_one = []
     player_two = []
 
+    letters_one = []
+    letters_two = []
+
+    letters = "QWERRTYUIOPASDFGHJKLZXCVBNM"
+
+    key_row_one = (20, 136)
+    key_row_two = (14, 148)
+    key_row_three = (38, 160)
+
     pos_one = (59, 48)
     pos_two = (192, 48)
 
@@ -26,33 +35,51 @@ class Blocks:
     def update(self):
         # Player one
         self.player_one.clear()
+        self.letters_one.clear()
         
-        for w in self.keyboard.player_one:
-            for c in range(len(w)):
+        for word in self.keyboard.player_one:
+            for char in range(len(word)):
+                has = False
+                for i in self.letters_one:
+                    if char == i:
+                        has = True
+                if not(has):
+                    self.letters_one.append(word[char])
+
                 placed = False
-                for n in range(len(self.keyboard.word)):
-                    if w[c] == self.keyboard.word[n].upper():
-                        if c == n:
+                for letter in range(len(self.keyboard.word)):
+                    if word[char] == self.keyboard.word[letter].upper():
+                        if char == letter:
                             # Green
-                            self.player_one.append(self.SQUARE_GREEN)
-                            placed = True
+                            if not(placed):
+                                self.player_one.append(self.SQUARE_GREEN)
+                                placed = True
                         else:
                             # Yellow
-                            self.player_one.append(self.SQUARE_YELLOW)
-                            placed = True
+                            if not(placed):
+                                self.player_one.append(self.SQUARE_YELLOW)
+                                placed = True
                 # Blue
                 if not(placed):
                     self.player_one.append(self.SQUARE_BLUE)
 
         # Player two
         self.player_two.clear()
+        self.letters_two.clear()
         
-        for w in self.keyboard.player_two:
-            for c in range(len(w)):
+        for word in self.keyboard.player_two:
+            for char in range(len(word)):
+                has = False
+                for i in self.letters_two:
+                    if word[char] == i:
+                        has = True
+                if not(has):
+                    self.letters_two.append(word[char])
+
                 placed = False
-                for n in range(len(self.keyboard.word)):
-                    if w[c] == self.keyboard.word[n].upper():
-                        if c == n:
+                for letter in range(len(self.keyboard.word)):
+                    if word[char] == self.keyboard.word[letter].upper():
+                        if char == letter:
                             # Green
                             self.player_two.append(self.SQUARE_GREEN)
                             placed = True
@@ -84,3 +111,65 @@ class Blocks:
 
             sprite = blocks.subsurface(self.player_two[i])
             target.blit(sprite, (pos_x, pos_y))
+        
+        # player one's keyboad letter colours
+        for i in range(len(self.letters_one)):
+            num = 0
+            for n in range(len(self.letters)):
+                if self.letters_one[i] == self.letters[n]:
+                    num = n
+            
+            pos = (0, 0)
+            offset_x = num
+
+            if offset_x > 19:
+                pos = self.key_row_three
+                offset_x -= 19
+            elif offset_x > 10:
+                pos = self.key_row_two
+                offset_x -= 9
+            else:
+                pos = self.key_row_one
+
+
+            sprite = blocks.subsurface(self.CIRCLE_BLUE)
+            for word in self.keyboard.player_one:
+                for char in range(len(word)):
+                    if word[char] == self.letters[num]:
+                        if self.player_one[char] == self.SQUARE_YELLOW: 
+                            sprite = blocks.subsurface(self.CIRCLE_YELLOW)
+                        elif self.player_one[char] == self.SQUARE_GREEN:
+                            sprite = blocks.subsurface(self.CIRCLE_GREEN)
+
+            target.blit(sprite, (pos[0] + offset_x * 12, pos[1]) )
+        
+        # Player two's keyboard letter colours
+        for i in range(len(self.letters_two)):
+            num = 0
+            for n in range(len(self.letters)):
+                if self.letters_two[i] == self.letters[n]:
+                    num = n
+            
+            pos = (0, 0)
+            offset_x = num
+
+            if offset_x > 19:
+                pos = self.key_row_three
+                offset_x -= 19
+            elif offset_x > 10:
+                pos = self.key_row_two
+                offset_x -= 9
+            else:
+                pos = self.key_row_one
+
+
+            sprite = blocks.subsurface(self.CIRCLE_BLUE)
+            for word in self.keyboard.player_two:
+                for char in range(len(word)):
+                    if word[char] == self.letters[num]:
+                        if self.player_two[char] == self.SQUARE_YELLOW: 
+                            sprite = blocks.subsurface(self.CIRCLE_YELLOW)
+                        elif self.player_two[char] == self.SQUARE_GREEN:
+                            sprite = blocks.subsurface(self.CIRCLE_GREEN)
+
+            target.blit(sprite, (pos[0] + offset_x * 12 + 137, pos[1]) )
