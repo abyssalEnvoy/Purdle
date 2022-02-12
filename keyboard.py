@@ -1,4 +1,5 @@
 import random
+from re import S
 from tkinter import W
 import pygame
 
@@ -99,7 +100,7 @@ class Keyboard:
                     self.won_two = True
                     self.win_two_num = n
 
-            if len(self.player_two) >= 6 or (self.won_two and self.won_one):
+            if len(self.player_two) >= 6 or (len(self.player_one) >= 6 and self.won_two) or (self.won_two and self.won_one):
                 self.game_over = True
 
         if self.turn == 0:
