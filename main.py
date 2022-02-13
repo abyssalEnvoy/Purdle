@@ -1,4 +1,4 @@
-import sys, time, random
+import sys, time
 import pygame
 
 from keyboard import Keyboard

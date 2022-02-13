@@ -1,6 +1,4 @@
 import random
-from re import S
-from tkinter import W
 import pygame
 
 from errors import Errors
