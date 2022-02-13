@@ -2,7 +2,7 @@
 
 A two-player competitive Wordle clone I made in a little over 24 hours for school using Python for learning purposes.
 
-Play the game on my [itch.io](https://abyssalenvoy.itch.io/purdle) page!
+Play the game on my [itch.io](https://envoye.itch.io/purdle) page!
 
 ## Building from source
 
