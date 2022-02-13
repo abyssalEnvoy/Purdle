@@ -6,7 +6,7 @@ Play the game on my [itch.io](https://envoye.itch.io/purdle) page!
 
 ##
 
-![](https://img.itch.zone/aW1hZ2UvMTM5NzMyNC84MTQ0MTgwLnBuZw==/original/vF5htP.png)
+![](https://img.itch.zone/aW1hZ2UvMTM5NzMyNC84MTQ5NjYyLnBuZw==/original/DPGiJo.png)
 
 ## Building from source
 
