@@ -47,30 +47,39 @@ class Keys:
         actual_keys = []
         actual_action_keys = []
 
-        if self.keyboard.turn == 0:
-            for i in self.keys:
-                actual_keys.append(i)
-            for i in self.action_keys:
-                actual_action_keys.append(i)
-        else:
-            for i in self.keys:
-                actual_keys.append(pygame.Rect(i[0] + 137, i[1], i[2], i[3]))
-            for i in self.action_keys:
-                actual_action_keys.append(pygame.Rect(i[0] + 137, i[1], i[2], i[3]))
+        if not self.keyboard.game_over:
+            if self.keyboard.turn == 0:
+                for i in self.keys:
+                    actual_keys.append(i)
+                for i in self.action_keys:
+                    actual_action_keys.append(i)
+            else:
+                for i in self.keys:
+                    actual_keys.append(pygame.Rect(i[0] + 137, i[1], i[2], i[3]))
+                for i in self.action_keys:
+                    actual_action_keys.append(pygame.Rect(i[0] + 137, i[1], i[2], i[3]))
 
-        if keys_down[0] and not self.previous_key[0]:
-            for i in range(len(actual_action_keys)):
-                if actual_action_keys[i].collidepoint(mouse_pos):
-                    if i == 0:
-                        self.keyboard.enter = True
-                    else:
+            if keys_down[0] and not self.previous_key[0]:
+                for i in range(len(actual_action_keys)):
+                    if actual_action_keys[i].collidepoint(mouse_pos):
+                        if i == 0:
+                            self.keyboard.enter = True
+                        else:
+                            if len(self.keyboard.player_two) <= 5 and not(self.keyboard.game_over):
+                                self.keyboard.user_text = self.keyboard.user_text[:-1]
+
+                for i in range(len(actual_keys)):
+                    if actual_keys[i].collidepoint(mouse_pos):
                         if len(self.keyboard.player_two) <= 5 and not(self.keyboard.game_over):
-                            self.keyboard.user_text = self.keyboard.user_text[:-1]
+                            if len(self.keyboard.user_text) < 5:
+                                self.keyboard.user_text += self.letters[i]
+        else:
+            actual_action_keys.append(pygame.Rect(28, 156, 17, 11))
+            actual_action_keys.append(pygame.Rect(28 + 137, 156, 17, 11))
 
-            for i in range(len(actual_keys)):
-                if actual_keys[i].collidepoint(mouse_pos):
-                    if len(self.keyboard.player_two) <= 5 and not(self.keyboard.game_over):
-                        if len(self.keyboard.user_text) < 5:
-                            self.keyboard.user_text += self.letters[i]
+            if keys_down[0] and not self.previous_key[0]:
+                for i in range(len(actual_action_keys)):
+                    if actual_action_keys[i].collidepoint(mouse_pos):
+                            self.keyboard.enter = True
 
         self.previous_key = keys_down
