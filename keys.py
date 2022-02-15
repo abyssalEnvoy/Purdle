@@ -17,6 +17,9 @@ class Keys:
     def __init__(self, keyboard):
         self.keyboard = keyboard
 
+        self.keys.clear()
+        self.action_keys.clear()
+
         for i in range(len(self.letters)):
             pos = (0, 0)
             offset_x = i
