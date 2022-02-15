@@ -71,6 +71,28 @@ class Blocks:
                         if char == letter:
                             self.player_one[word * 5 + char] = self.SQUARE_GREEN
 
+        for word in range(len(self.keyboard.player_one)):
+            for letter in self.keyboard.word_one:
+                num = 0
+                for char in self.keyboard.word_one:
+                    if letter == char:
+                        num += 1
+
+                num_in_word = 0
+                places = []
+                for char in range(len(self.keyboard.player_one[word])):
+                    if letter.upper() == self.keyboard.player_one[word][char]:
+                        num_in_word += 1
+                        places.append(char)
+                
+                while num_in_word > num:
+                    for n in range(len(places) - 1, -1, -1):
+                        if self.player_one[word * 5 + places[n]] != self.SQUARE_GREEN:
+                           self.player_one[word * 5 + places[n]] = self.SQUARE_BLUE
+                           num_in_word -= 1
+
+
+
         # Player two
         self.player_two.clear()
         self.letters_two.clear()
@@ -108,6 +130,26 @@ class Blocks:
                     if self.keyboard.player_two[word][char] == self.keyboard.word_two[letter].upper():
                         if char == letter:
                             self.player_two[word * 5 + char] = self.SQUARE_GREEN
+
+        for word in range(len(self.keyboard.player_two)):
+            for letter in self.keyboard.word_two:
+                num = 0
+                for char in self.keyboard.word_two:
+                    if letter == char:
+                        num += 1
+
+                num_in_word = 0
+                places = []
+                for char in range(len(self.keyboard.player_two[word])):
+                    if letter.upper() == self.keyboard.player_two[word][char]:
+                        num_in_word += 1
+                        places.append(char)
+                
+                while num_in_word > num:
+                    for n in range(len(places) - 1, -1, -1):
+                        if self.player_two[word * 5 + places[n]] != self.SQUARE_GREEN:
+                           self.player_two[word * 5 + places[n]] = self.SQUARE_BLUE
+                           num_in_word -= 1
 
     
     def render(self, target, blocks):
