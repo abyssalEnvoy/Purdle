@@ -26,6 +26,7 @@ class Keyboard:
     word_one = ""
     word_two = ""
     turn = 0
+    enter = False
 
     spacing = 0
     user_text = ""
@@ -51,7 +52,7 @@ class Keyboard:
 
         keys_down = pygame.key.get_pressed()
 
-        if keys_down[pygame.K_RETURN] and not self.previous_key[pygame.K_RETURN]:
+        if (keys_down[pygame.K_RETURN] and not self.previous_key[pygame.K_RETURN]) or self.enter == True:
             if not(self.game_over):
                 word_in_list = False
                 for n in self.words_list:
@@ -100,6 +101,8 @@ class Keyboard:
 
             if len(self.player_two) >= 6 or (len(self.player_one) >= 6 and self.won_two) or (self.won_two and self.won_one):
                 self.game_over = True
+
+        self.enter = False
 
         if self.turn == 0:
             self.pos_render =  (self.pos_one[0], self.pos_one[1] + self.spacing)

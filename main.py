@@ -4,6 +4,7 @@ import pygame
 from keyboard import Keyboard
 from font import Font
 from blocks import Blocks
+from keys import Keys
 
 # Screen size
 WINDOW_WIDTH = 640
@@ -29,6 +30,7 @@ KEYBOARD = pygame.image.load("content/PurdleKeyboard.png").convert_alpha()
 ERRORS = pygame.image.load("content/PurdleErrors.png").convert_alpha()
 END = pygame.image.load("content/PurdleEnd.png").convert_alpha()
 ICON = pygame.image.load("content/PurdleIcon.png").convert()
+CURSOR = pygame.image.load("content/PurdleCursor.png").convert_alpha()
 
 def render(keyboard, blocks, font):
     GRAPHICS.fill(CLEAR_COLOR)
@@ -69,6 +71,8 @@ def render(keyboard, blocks, font):
     bar_width = int((window_width - int(VIEW_WIDTH * scale)) / 2)
     bar_height = int((window_height - int(VIEW_HEIGHT * scale)) / 2)
 
+    TARGET.blit(CURSOR, ((pygame.mouse.get_pos()[0] - bar_width) / scale - 4, (pygame.mouse.get_pos()[1] - bar_height) / scale - 4))
+
     resized = pygame.transform.scale(TARGET, (int(VIEW_WIDTH * scale), int(VIEW_HEIGHT * scale)))
     GRAPHICS.blit(resized, (bar_width, bar_height))
     
@@ -83,10 +87,12 @@ def main():
     keyboard.player_two = []
     font = Font(FONT)
     blocks = Blocks(keyboard)
+    keys = Keys(keyboard)
 
     pygame.init()
     pygame.display.set_icon(ICON)
     pygame.display.set_caption("Purdle")
+    pygame.mouse.set_visible(False)
 
     prev_time = time.time()
     delta_time = 0
@@ -107,6 +113,14 @@ def main():
         
         keyboard.update()
         blocks.update()
+
+        window_width, window_height = GRAPHICS.get_size()
+        scale = min(window_width / VIEW_WIDTH, window_height / VIEW_HEIGHT)
+
+        bar_width = int((window_width - int(VIEW_WIDTH * scale)) / 2)
+        bar_height = int((window_height - int(VIEW_HEIGHT * scale)) / 2)
+
+        keys.update((int((pygame.mouse.get_pos()[0] - bar_width) / scale - 4), int((pygame.mouse.get_pos()[1] - bar_height) / scale - 4)))
 
         render(keyboard, blocks, font)
 
