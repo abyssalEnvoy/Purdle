@@ -1,6 +1,11 @@
 import pygame
 
 class Keys:
+    NONE = pygame.Rect(0, 0, 9, 9)
+    HOVER = pygame.Rect(9, 0, 9, 9)
+
+    cursor = NONE
+
     letters = "QWERTYUIOPASDFGHJKLZXCVBNM"
     keys = []
     action_keys = []
@@ -47,6 +52,8 @@ class Keys:
         actual_keys = []
         actual_action_keys = []
 
+        self.cursor = self.NONE
+
         if not self.keyboard.game_over:
             if self.keyboard.turn == 0:
                 for i in self.keys:
@@ -73,6 +80,15 @@ class Keys:
                         if len(self.keyboard.player_two) <= 5 and not(self.keyboard.game_over):
                             if len(self.keyboard.user_text) < 5:
                                 self.keyboard.user_text += self.letters[i]
+            
+            
+            for i in range(len(actual_action_keys)):
+                if actual_action_keys[i].collidepoint(mouse_pos):
+                    self.cursor = self.HOVER
+            
+            for i in range(len(actual_keys)):
+                if actual_keys[i].collidepoint(mouse_pos):
+                    self.cursor = self.HOVER
         else:
             actual_action_keys.append(pygame.Rect(28, 156, 17, 11))
             actual_action_keys.append(pygame.Rect(28 + 137, 156, 17, 11))
@@ -80,6 +96,14 @@ class Keys:
             if keys_down[0] and not self.previous_key[0]:
                 for i in range(len(actual_action_keys)):
                     if actual_action_keys[i].collidepoint(mouse_pos):
-                            self.keyboard.enter = True
+                        self.keyboard.enter = True
+
+            for i in range(len(actual_action_keys)):
+                if actual_action_keys[i].collidepoint(mouse_pos):
+                    self.cursor = self.HOVER
 
         self.previous_key = keys_down
+
+    def render_cursor(self, target, cursor, mouse_pos):
+        sprite = cursor.subsurface(self.cursor)
+        target.blit(sprite, mouse_pos)

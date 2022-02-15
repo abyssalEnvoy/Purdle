@@ -32,7 +32,7 @@ END = pygame.image.load("content/PurdleEnd.png").convert_alpha()
 ICON = pygame.image.load("content/PurdleIcon.png").convert()
 CURSOR = pygame.image.load("content/PurdleCursor.png").convert_alpha()
 
-def render(keyboard, blocks, font):
+def render(keyboard, blocks, font, keys):
     GRAPHICS.fill(CLEAR_COLOR)
     TARGET.blit(BACKGROUND, (0, 0))
 
@@ -71,7 +71,8 @@ def render(keyboard, blocks, font):
     bar_width = int((window_width - int(VIEW_WIDTH * scale)) / 2)
     bar_height = int((window_height - int(VIEW_HEIGHT * scale)) / 2)
 
-    TARGET.blit(CURSOR, ((pygame.mouse.get_pos()[0] - bar_width) / scale - 4, (pygame.mouse.get_pos()[1] - bar_height) / scale - 4))
+    mouse_pos = (int((pygame.mouse.get_pos()[0] - bar_width) / scale - 4), int((pygame.mouse.get_pos()[1] - bar_height) / scale - 4))
+    keys.render_cursor(TARGET, CURSOR, mouse_pos)
 
     resized = pygame.transform.scale(TARGET, (int(VIEW_WIDTH * scale), int(VIEW_HEIGHT * scale)))
     GRAPHICS.blit(resized, (bar_width, bar_height))
@@ -122,7 +123,7 @@ def main():
 
         keys.update((int((pygame.mouse.get_pos()[0] - bar_width) / scale - 4), int((pygame.mouse.get_pos()[1] - bar_height) / scale - 4)))
 
-        render(keyboard, blocks, font)
+        render(keyboard, blocks, font, keys)
 
         # Restart game
         if keyboard.restart:
