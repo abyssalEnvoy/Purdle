@@ -87,9 +87,10 @@ class Blocks:
                 
                 while num_in_word > num:
                     for n in range(len(places) - 1, -1, -1):
-                        if self.player_one[word * 5 + places[n]] != self.SQUARE_GREEN:
-                           self.player_one[word * 5 + places[n]] = self.SQUARE_BLUE
-                           num_in_word -= 1
+                        if n != 0:
+                            if self.player_one[word * 5 + places[n]] != self.SQUARE_GREEN:
+                                self.player_one[word * 5 + places[n]] = self.SQUARE_BLUE
+                                num_in_word -= 1
 
 
 
@@ -147,9 +148,10 @@ class Blocks:
                 
                 while num_in_word > num:
                     for n in range(len(places) - 1, -1, -1):
-                        if self.player_two[word * 5 + places[n]] != self.SQUARE_GREEN:
-                           self.player_two[word * 5 + places[n]] = self.SQUARE_BLUE
-                           num_in_word -= 1
+                        if n != 0:
+                            if self.player_two[word * 5 + places[n]] != self.SQUARE_GREEN:
+                                self.player_two[word * 5 + places[n]] = self.SQUARE_BLUE
+                                num_in_word -= 1
 
     
     def render(self, target, blocks):
