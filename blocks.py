@@ -84,14 +84,14 @@ class Blocks:
                     if letter.upper() == self.keyboard.player_one[word][char]:
                         num_in_word += 1
                         places.append(char)
-                
-                while num_in_word > num:
-                    for n in range(len(places) - 1, -1, -1):
-                        if n != 0:
-                            if self.player_one[word * 5 + places[n]] != self.SQUARE_GREEN:
-                                self.player_one[word * 5 + places[n]] = self.SQUARE_BLUE
-                                num_in_word -= 1
-
+                                
+                for n in range(len(places) - 1, -1, -1):
+                    while num_in_word > num:
+                        if self.player_one[word * 5 + places[n]] != self.SQUARE_GREEN:
+                            self.player_one[word * 5 + places[n]] = self.SQUARE_BLUE
+                            num_in_word -= 1
+                        else:
+                            break
 
 
         # Player two
@@ -145,13 +145,14 @@ class Blocks:
                     if letter.upper() == self.keyboard.player_two[word][char]:
                         num_in_word += 1
                         places.append(char)
-                
-                while num_in_word > num:
-                    for n in range(len(places) - 1, -1, -1):
-                        if n != 0:
-                            if self.player_two[word * 5 + places[n]] != self.SQUARE_GREEN:
-                                self.player_two[word * 5 + places[n]] = self.SQUARE_BLUE
-                                num_in_word -= 1
+
+                for n in range(len(places) - 1, -1, -1):
+                    while num_in_word > num:
+                        if self.player_two[word * 5 + places[n]] != self.SQUARE_GREEN:
+                            self.player_two[word * 5 + places[n]] = self.SQUARE_BLUE
+                            num_in_word -= 1
+                        else:
+                            break
 
     
     def render(self, target, blocks):
